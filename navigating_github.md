@@ -13,3 +13,8 @@ https://github.com/hadleyd2/STAT545-participation
 Here is my corresponding Individual account:
 
 https://github.com/hadleyd2
+
+Here is the URL for STAT 545A assignment 01 from last year (2018):
+
+https://github.com/STAT545-UBC/Classroom/blob/11f1176c30aca85c89a24ef11f1cad661a724ff4/assignments/hw01/hw01.md
+Note that this assignment was due by 23:59 Tuesday 2018-09-18.
