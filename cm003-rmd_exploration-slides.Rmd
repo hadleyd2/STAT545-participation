@@ -1,0 +1,30 @@
+---
+title: "Tibble Exploration"
+author: "Dan Hadley"
+date: "9/10/2019"
+output: ioslides_presentation
+---
+<!-- slides are broken up by header by markdown -->
+```{r load, warning=FALSE, echo=FALSE}
+## load is the name of this code chunk
+## warning is an argument to suppress warnings
+## echo is an argument to either display the code (TRUE) or not (FALSE) in the document
+## command + option + i creates code chunk
+library(tibble)
+library(gapminder)
+library(DT)
+```
+
+## Print out gapminder data:
+
+```{r}
+x <- gapminder
+```
+
+<!--This is a comment-->
+
+## Convert mtcars to a tibble and wrap in database
+```{r}
+datatable(as_tibble(mtcars))
+```
+
