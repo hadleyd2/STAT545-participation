@@ -34,7 +34,7 @@ gapminder %>%
   datatable()
 ```
 
-2. Calculate the growth in population since the first year on record _for each country_ by rearranging the following lines, and filling in the `FILL_THIS_IN`. Here's another convenience function for you: `dplyr::first()`. 
+2. Calculate the growth in population since the first year on record _for each country_ by rearranging the following lines, and filling in the `FILL_THIS_IN`. Here's another convenience function for you: `dplyr::first()`, which gives you the first element of a vector. 
 
 ```
 mutate(rel_growth = FILL_THIS_IN) %>% 
@@ -44,8 +44,12 @@ DT::datatable()
 group_by(country) %>% 
 ```
 
-```{r}
-
+```{r correctorder}
+gapminder %>% 
+  group_by(country) %>% 
+  arrange(year) %>% 
+  mutate(rel_growth = pop-first(pop)) %>% 
+  datatable()
 ```
 
 
