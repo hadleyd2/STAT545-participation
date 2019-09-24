@@ -69,7 +69,16 @@ knitr::kable()
 ```
 
 ```{r}
-
+gapminder %>% #start with tibble we want to modify
+  group_by(country) %>% #Calc drop for each country first
+  arrange(year) %>% #previous years come first
+  mutate(inc_life_exp = tsibble::difference(lifeExp)) %>% #calc change in lifeExp
+  drop_na() %>% #removes NA's for first year's difference
+  ungroup() %>% #ungroup since we no longer need country groups
+  group_by(continent) %>% #now group by continent
+  filter(inc_life_exp == min(inc_life_exp)) %>% #only show minimum for each continent group
+  arrange(inc_life_exp) %>% #show in increasing order
+  knitr::kable()
 ```
 
 
