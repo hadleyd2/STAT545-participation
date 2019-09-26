@@ -83,9 +83,17 @@ gapminder %>%
 
 
 ```r
+# ggplot(gapminder, aes(gdpPercap, lifeExp)) +
+#   geom_point(alpha = 0.2) +
+#   scale_x_log10()
+
+#every line preceeded by a '+' is called adding a 'layer'
 ggplot(gapminder, aes(gdpPercap, lifeExp)) +
   geom_point(alpha = 0.2) +
-  scale_x_log10()
+  scale_x_log10(labels=scales::comma_format()) + 
+  facet_wrap(~continent, #create a separate plot per continent (sub-panels)
+             nrow = 1, #puts all plots in a single row
+             scales = "free") #uses same scale for each plot by default free allows different axes per plot "free_x" only allows the x-axis to be different per plot and "free_y" allows the y-axis to be different per plot
 ```
 
 ![](cm008_files/unnamed-chunk-4-1.png)<!-- -->
@@ -101,10 +109,11 @@ ggplot(gapminder, aes(gdpPercap, lifeExp)) +
 ```r
 gapminder %>% 
   filter(continent != "Oceania") %>% 
-  ggplot(aes(gdpPercap, lifeExp)) +
-  facet_wrap(~ continent) +
-  geom_point(alpha = 0.2) +
-  scale_x_log10(labels = scales::comma_format())
+  ggplot(aes(gdpPercap, lifeExp, size=pop, fill= continent, colour=continent)) + #fill changes the color of the interior of the point and colour changes the outline
+  facet_wrap(~ continent, nrow=1) +
+  geom_point(alpha = 0.5, shape=21) +
+  scale_x_log10(labels = scales::comma_format()) +
+  scale_size_area(max_size=4) #makes sizes proportional to the area of the plot
 ```
 
 ![](cm008_files/unnamed-chunk-5-1.png)<!-- -->
