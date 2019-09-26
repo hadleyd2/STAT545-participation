@@ -5,6 +5,9 @@ output:
     keep_md: true
     theme: paper
 ---
+<!-- To view the html file on github, use the following link: https://hadleyd2.github.io/STAT545-participation/cm008/cm008-exercise.html -->
+
+<!-- Note that all you have to do is paste, https://hadleyd2.github.io/STAT545-participation/ , in front of the file location within my participation repo, cm008/cm008-exercise.html -->
 
 In this worksheet, we'll be looking at some erroneous plots and fixing them. 
 
