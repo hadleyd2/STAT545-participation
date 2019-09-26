@@ -63,8 +63,12 @@ Fix this plot so that it shows life expectancy over time _for each country_. Not
 ```r
 gapminder %>% 
   # group_by(country) %>% #ggplot does not recognize grouped tibble
-  ggplot(aes(year, lifeExp, group=country)) + #add group aesthetic here
-  geom_line(alpha = 0.2) #transparent lines
+  ggplot(aes(year, lifeExp, 
+             group=country, #add group aesthetic here
+             colour = country == "Rwanda")) + #colour Rawanda differently
+  geom_line(alpha = 0.5) + #transparent lines
+  scale_colour_discrete("", #changes legend name to blank
+                        labels = c("Other", "Rwanda")) #change label names in legend)
 ```
 
 ![](cm008_files/unnamed-chunk-3-1.png)<!-- -->
