@@ -20,10 +20,10 @@ install.packages("scales")
 
 
 ```r
-library(tidyverse)
-library(gapminder)
-library(ggridges)
-library(scales)
+suppressPackageStartupMessages(library(tidyverse))
+suppressPackageStartupMessages(library(gapminder))
+suppressPackageStartupMessages(library(ggridges))
+suppressPackageStartupMessages(library(scales))
 ```
 
 <!---The following chunk allows errors when knitting--->
@@ -37,13 +37,21 @@ After fixing the error, fix the overlapping problem in the following plot (attri
 
 
 ```r
-ggplot(mpg, aes(cty, hwy)) %>% 
-  geom_point()
+# ggplot(mpg, aes(cty, hwy)) + 
+#   geom_point()
+
+## Solve overplotting with jitter, transparency, and size
+ggplot(mpg, aes(cty, hwy)) + 
+  geom_jitter(alpha = 0.5, size = 1) + #default is actually larger than 1
+  geom_smooth(method="lm") + #show a linear regression fit through data
+  theme_bw() #get rid of grey background
 ```
 
-```
-## Error: `mapping` must be created by `aes()`
-## Did you use %>% instead of +?
+![](cm008_files/unnamed-chunk-2-1.png)<!-- -->
+
+```r
+## The linear regression is fit through the original data
+## and not the jittered data
 ```
 
 
@@ -54,9 +62,9 @@ Fix this plot so that it shows life expectancy over time _for each country_. Not
 
 ```r
 gapminder %>% 
-  group_by(country) %>% 
-  ggplot(aes(year, lifeExp)) +
-  geom_line()
+  # group_by(country) %>% #ggplot does not recognize grouped tibble
+  ggplot(aes(year, lifeExp, group=country)) + #add group aesthetic here
+  geom_line(alpha = 0.2) #transparent lines
 ```
 
 ![](cm008_files/unnamed-chunk-3-1.png)<!-- -->
