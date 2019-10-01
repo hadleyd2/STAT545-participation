@@ -5,6 +5,8 @@ editor_options:
   chunk_output_type: inline
 ---
 
+`install.package("tidyr")`
+
 ```{r, warning = FALSE, message = FALSE}
 library(tidyverse)
 lotr  <- read_csv("https://raw.githubusercontent.com/jennybc/lotr-tidy/master/data/lotr_tidy.csv")
@@ -24,26 +26,33 @@ Consider the Lord of the Rings data:
 
 ```{r}
 lotr
+
+## Whether this data is tidy or not depends upon how we define an observation
+## If Observation is combination of Film+Race+Gender, then it is tidy
 ```
 
 1. Would you say this data is in tidy format?
+<!-- A dataset is tidy if each ro is an observation, each column is a variable, each cell is a value -->
 
 2. Widen the data so that we see the words spoken by each race, by putting race as its own column.
 
 ```{r}
+## We make each race a separate column and puts words as the values in each column
 (lotr_wide <- lotr %>% 
-  pivot_wider(FILL_THIS_IN = c(-Race, -Words), 
-              FILL_THIS_IN = Race, 
-              FILL_THIS_IN = Words))
+  pivot_wider(id_cols = c(-Race, -Words), 
+              names_from = Race, 
+              values_from = Words))
 ```
 
 3. Re-lengthen the wide LOTR data from Question 2 above.
 
 ```{r}
+# Note that pivot_longer() does not have id_cols argument, just cols=
+## Collapse race columns into one column, lengthening the tibble
 lotr_wide %>% 
-  pivot_longer(FILL_THIS_IN = FILL_THIS_IN, 
-               names_to  = FILL_THIS_IN, 
-               values_to = FILL_THIS_IN)
+  pivot_longer(cols = c(-Film, -Gender), #could also use Elf:Man
+               names_to  = "Race", 
+               values_to = "Words")
 ```
 
 ## Exercise 2: Multivariate Pivoting
