@@ -62,29 +62,33 @@ Congratulations, you're getting married! In addition to the wedding, you've deci
 ```{r}
 guest %>% 
   DT::datatable(rownames = FALSE)
+
+## Party is not "Party of #". Party is grouping invitees by party.  For example, party 1 contains 4 members.
 ```
 
 1. Put "meal" and "attendance" as their own columns, with the events living in a new column.
 
 ```{r}
 (guest_long <- guest %>% 
-  pivot_longer(cols      = FILL_THIS_IN, 
-               names_to  = FILL_THIS_IN,
-               FILL_THIS_IN))
+  pivot_longer(cols      = c(-party, -name), 
+               names_to  = c(".value", "event"), #makes each value of 
+               names_sep = "_"))
 ```
 
 2. Use `tidyr::separate()` to split the name into two columns: "first" and "last". Then, re-unite them with `tidyr::unite()`.
 
 ```{r}
+## To see what's happening here, first comment out the unite() function and run
+## then uncomment and re-run
 guest_long %>% 
-  separate(FILL_THIS_IN, into = FILL_THIS_IN)
-  # unite(col = "name", FILL_THIS_IN, sep = FILL_THIS_IN)
+  separate(name, into = c("first", "last"), sep=" ") %>% 
+  unite(col = "name", first, last, sep = " ")
 ```
 
 3. Which parties still have a "PENDING" status for all members and all events?
 
 ```{r}
-FILL_THIS_IN %>% 
+guest_long %>% 
   group_by(party) %>% 
   summarize(all_pending = all(attendance == "PENDING"))
 ```
@@ -92,9 +96,9 @@ FILL_THIS_IN %>%
 4. Which parties still have a "PENDING" status for all members for the wedding?
 
 ```{r}
-FILL_THIS_IN %>% 
+guest %>% 
   group_by(party) %>% 
-  summarize(pending_wedding = all(FILL_THIS_IN == "PENDING"))
+  summarize(pending_wedding = all(attendance_wedding == "PENDING"))
 ```
 
 
@@ -102,17 +106,19 @@ FILL_THIS_IN %>%
 
 ```{r}
 guest_long %>% 
-  pivot_wider(id_cols     = FILL_THIS_IN, 
-              names_from  = FILL_THIS_IN, 
+  pivot_wider(id_cols     = c(party, name), #which columns form a unique observation 
+              names_from  = event, #values of the event column determine the new columns like expand.grid()
               names_sep   = "_", 
-              values_from = FILL_THIS_IN)
+              values_from = c(meal, attendance))
+## Can use dplyr to drop the useless meal_golf column
 ```
 
 6. You also have a list of emails for each party, in this worksheet under the variable `email`. Change this so that each person gets their own row. Use `tidyr::separate_rows()`
 
 ```{r}
 email %>% 
-  separate_rows(FILL_THIS_IN, sep = FILL_THIS_IN)
+  separate_rows(guest, sep = ", ") 
+#First argument of separate_rows is column that determins how to separate rows
 ```
 
 
