@@ -79,52 +79,133 @@ The package `singer` comes with two smallish data frames about songs. Let's take
 ```
 
 
-1. We really care about the songs in `time`. But, which of those songs do we know its corresponding album?
+1. We really care about the songs in the tibble `time`. But, which of those songs do we know its corresponding album?
 
 
 ```r
+#We want to use a filtering join here so that we can remove rows we
+#do not know the corresponding album
 time %>% 
-  FILL_THIS_IN(album, by = FILL_THIS_IN)
+  semi_join(album, by = c("song", "artist_name")) #including both handles issues when two songs have the same name
 ```
 
 ```
-## Error in FILL_THIS_IN(., album, by = FILL_THIS_IN): could not find function "FILL_THIS_IN"
+## # A tibble: 13 x 3
+##    song                                               artist_name      year
+##    <chr>                                              <chr>           <int>
+##  1 Grievance                                          Pearl Jam        2000
+##  2 Stupidmop                                          Pearl Jam        1994
+##  3 Present Tense                                      Pearl Jam        1996
+##  4 MFC                                                Pearl Jam        1998
+##  5 Lukin                                              Pearl Jam        1996
+##  6 It's Lulu                                          The Boo Radleys  1995
+##  7 Sparrow                                            The Boo Radleys  1992
+##  8 High as Monkeys                                    The Boo Radleys  1998
+##  9 Butterfly McQueen                                  The Boo Radleys  1993
+## 10 My One and Only Love                               Carly Simon      2005
+## 11 It Was So Easy  (LP Version)                       Carly Simon      1972
+## 12 I've Got A Crush On You                            Carly Simon      1994
+## 13 "Manha De Carnaval (Theme from \"Black Orpheus\")" Carly Simon      2007
+```
+
+```r
+#A mutating join will preserve the columns
+time %>% 
+  inner_join(album, by=c("song", "artist_name"))
+```
+
+```
+## # A tibble: 13 x 5
+##    song                     artist_name    year city       album           
+##    <chr>                    <chr>         <int> <chr>      <chr>           
+##  1 Grievance                Pearl Jam      2000 Seattle, … Binaural        
+##  2 Stupidmop                Pearl Jam      1994 Seattle, … Vitalogy        
+##  3 Present Tense            Pearl Jam      1996 Seattle, … No Code         
+##  4 MFC                      Pearl Jam      1998 Seattle, … Live On Two Legs
+##  5 Lukin                    Pearl Jam      1996 Seattle, … Seattle Washing…
+##  6 It's Lulu                The Boo Radl…  1995 Liverpool… Best Of         
+##  7 Sparrow                  The Boo Radl…  1992 Liverpool… Everything's Al…
+##  8 High as Monkeys          The Boo Radl…  1998 Liverpool… Kingsize        
+##  9 Butterfly McQueen        The Boo Radl…  1993 Liverpool… Giant Steps     
+## 10 My One and Only Love     Carly Simon    2005 New York,… Moonlight Seren…
+## 11 It Was So Easy  (LP Ver… Carly Simon    1972 New York,… No Secrets      
+## 12 I've Got A Crush On You  Carly Simon    1994 New York,… Clouds In My Co…
+## 13 "Manha De Carnaval (The… Carly Simon    2007 New York,… Into White
 ```
 
 2. Go ahead and add the corresponding albums to the `time` tibble, being sure to preserve rows even if album info is not readily available.
 
 
 ```r
+#We do not want to remove rows if album info is unavailable
+#use a mutating joint
 time %>% 
-  FILL_THIS_IN(album, by = FILL_THIS_IN)
+  left_join(album, by = c("song", "artist_name"))
 ```
 
 ```
-## Error in FILL_THIS_IN(., album, by = FILL_THIS_IN): could not find function "FILL_THIS_IN"
+## # A tibble: 22 x 5
+##    song                artist_name     year city        album              
+##    <chr>               <chr>          <int> <chr>       <chr>              
+##  1 Corduroy            Pearl Jam       1994 <NA>        <NA>               
+##  2 Grievance           Pearl Jam       2000 Seattle, WA Binaural           
+##  3 Stupidmop           Pearl Jam       1994 Seattle, WA Vitalogy           
+##  4 Present Tense       Pearl Jam       1996 Seattle, WA No Code            
+##  5 MFC                 Pearl Jam       1998 Seattle, WA Live On Two Legs   
+##  6 Lukin               Pearl Jam       1996 Seattle, WA Seattle Washington…
+##  7 It's Lulu           The Boo Radle…  1995 Liverpool,… Best Of            
+##  8 Sparrow             The Boo Radle…  1992 Liverpool,… Everything's Alrig…
+##  9 Martin_ Doom! It's… The Boo Radle…  1995 <NA>        <NA>               
+## 10 Leaves And Sand     The Boo Radle…  1993 <NA>        <NA>               
+## # … with 12 more rows
 ```
 
 3. Which songs do we have "year", but not album info?
 
 
 ```r
+#filtering join
 time %>% 
-  FILL_THIS_IN(album, by = "song")
+  semi_join(album, by = "song")
 ```
 
 ```
-## Error in FILL_THIS_IN(., album, by = "song"): could not find function "FILL_THIS_IN"
+## # A tibble: 13 x 3
+##    song                                               artist_name      year
+##    <chr>                                              <chr>           <int>
+##  1 Grievance                                          Pearl Jam        2000
+##  2 Stupidmop                                          Pearl Jam        1994
+##  3 Present Tense                                      Pearl Jam        1996
+##  4 MFC                                                Pearl Jam        1998
+##  5 Lukin                                              Pearl Jam        1996
+##  6 It's Lulu                                          The Boo Radleys  1995
+##  7 Sparrow                                            The Boo Radleys  1992
+##  8 High as Monkeys                                    The Boo Radleys  1998
+##  9 Butterfly McQueen                                  The Boo Radleys  1993
+## 10 My One and Only Love                               Carly Simon      2005
+## 11 It Was So Easy  (LP Version)                       Carly Simon      1972
+## 12 I've Got A Crush On You                            Carly Simon      1994
+## 13 "Manha De Carnaval (Theme from \"Black Orpheus\")" Carly Simon      2007
 ```
 
 4. Which artists are in `time`, but not in `album`?
 
 
 ```r
+#filtering join again
 time %>% 
-  anti_join(album, by = "FILL_THIS_IN")
+  anti_join(album, by = "artist_name")
 ```
 
 ```
-## `by` can't contain join column `FILL_THIS_IN` which is missing from LHS
+## # A tibble: 5 x 3
+##   song                  artist_name   year
+##   <chr>                 <chr>        <int>
+## 1 Mine Again            Mariah Carey  2005
+## 2 Don't Forget About Us Mariah Carey  2005
+## 3 Babydoll              Mariah Carey  1997
+## 4 Don't Forget About Us Mariah Carey  2005
+## 5 Vision Of Love        Mariah Carey  1990
 ```
 
 
@@ -132,12 +213,28 @@ time %>%
 
 
 ```r
-FILL_THIS_IN %>% 
-  FILL_THIS_IN(FILL_THIS_IN, by = "song")
+#Mutating join to add rows and columns
+#rows are added if album has songs not in time
+#cols are added if album has columns not in time
+time %>% 
+  full_join(album, by = c("song", "artist_name"))
 ```
 
 ```
-## Error in eval(lhs, parent, parent): object 'FILL_THIS_IN' not found
+## # A tibble: 23 x 5
+##    song                artist_name     year city        album              
+##    <chr>               <chr>          <int> <chr>       <chr>              
+##  1 Corduroy            Pearl Jam       1994 <NA>        <NA>               
+##  2 Grievance           Pearl Jam       2000 Seattle, WA Binaural           
+##  3 Stupidmop           Pearl Jam       1994 Seattle, WA Vitalogy           
+##  4 Present Tense       Pearl Jam       1996 Seattle, WA No Code            
+##  5 MFC                 Pearl Jam       1998 Seattle, WA Live On Two Legs   
+##  6 Lukin               Pearl Jam       1996 Seattle, WA Seattle Washington…
+##  7 It's Lulu           The Boo Radle…  1995 Liverpool,… Best Of            
+##  8 Sparrow             The Boo Radle…  1992 Liverpool,… Everything's Alrig…
+##  9 Martin_ Doom! It's… The Boo Radle…  1995 <NA>        <NA>               
+## 10 Leaves And Sand     The Boo Radle…  1993 <NA>        <NA>               
+## # … with 13 more rows
 ```
 
 

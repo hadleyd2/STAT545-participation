@@ -46,40 +46,53 @@ The package `singer` comes with two smallish data frames about songs. Let's take
 ```
 
 
-1. We really care about the songs in `time`. But, which of those songs do we know its corresponding album?
+1. We really care about the songs in the tibble `time`. But, which of those songs do we know its corresponding album?
 
 ```{r}
+#We want to use a filtering join here so that we can remove rows we
+#do not know the corresponding album
 time %>% 
-  FILL_THIS_IN(album, by = FILL_THIS_IN)
+  semi_join(album, by = c("song", "artist_name")) #including both handles issues when two songs have the same name
+
+#A mutating join will preserve the columns
+time %>% 
+  inner_join(album, by=c("song", "artist_name"))
 ```
 
 2. Go ahead and add the corresponding albums to the `time` tibble, being sure to preserve rows even if album info is not readily available.
 
 ```{r}
+#We do not want to remove rows if album info is unavailable
+#use a mutating joint
 time %>% 
-  FILL_THIS_IN(album, by = FILL_THIS_IN)
+  left_join(album, by = c("song", "artist_name"))
 ```
 
 3. Which songs do we have "year", but not album info?
 
 ```{r}
+#filtering join
 time %>% 
-  FILL_THIS_IN(album, by = "song")
+  semi_join(album, by = "song")
 ```
 
 4. Which artists are in `time`, but not in `album`?
 
 ```{r}
+#filtering join again
 time %>% 
-  anti_join(album, by = "FILL_THIS_IN")
+  anti_join(album, by = "artist_name")
 ```
 
 
 5. You've come across these two tibbles, and just wish all the info was available in one tibble. What would you do?
 
 ```{r}
-FILL_THIS_IN %>% 
-  FILL_THIS_IN(FILL_THIS_IN, by = "song")
+#Mutating join to add rows and columns
+#rows are added if album has songs not in time
+#cols are added if album has columns not in time
+time %>% 
+  full_join(album, by = c("song", "artist_name"))
 ```
 
 

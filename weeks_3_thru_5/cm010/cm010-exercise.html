@@ -439,35 +439,126 @@ devtools::install_github(&quot;JoeyBernhardt/singer&quot;)</code></pre>
 ## 13 I've Got A Crush On You     Carly Simon   New York, … Clouds In My Coff…
 ## 14 &quot;Manha De Carnaval (Theme … Carly Simon   New York, … Into White</code></pre>
 <ol style="list-style-type: decimal">
-<li>We really care about the songs in <code>time</code>. But, which of those songs do we know its corresponding album?</li>
+<li>We really care about the songs in the tibble <code>time</code>. But, which of those songs do we know its corresponding album?</li>
 </ol>
-<pre class="r"><code>time %&gt;% 
-  FILL_THIS_IN(album, by = FILL_THIS_IN)</code></pre>
-<pre><code>## Error in FILL_THIS_IN(., album, by = FILL_THIS_IN): could not find function &quot;FILL_THIS_IN&quot;</code></pre>
+<pre class="r"><code>#We want to use a filtering join here so that we can remove rows we
+#do not know the corresponding album
+time %&gt;% 
+  semi_join(album, by = c(&quot;song&quot;, &quot;artist_name&quot;)) #including both handles issues when two songs have the same name</code></pre>
+<pre><code>## # A tibble: 13 x 3
+##    song                                               artist_name      year
+##    &lt;chr&gt;                                              &lt;chr&gt;           &lt;int&gt;
+##  1 Grievance                                          Pearl Jam        2000
+##  2 Stupidmop                                          Pearl Jam        1994
+##  3 Present Tense                                      Pearl Jam        1996
+##  4 MFC                                                Pearl Jam        1998
+##  5 Lukin                                              Pearl Jam        1996
+##  6 It's Lulu                                          The Boo Radleys  1995
+##  7 Sparrow                                            The Boo Radleys  1992
+##  8 High as Monkeys                                    The Boo Radleys  1998
+##  9 Butterfly McQueen                                  The Boo Radleys  1993
+## 10 My One and Only Love                               Carly Simon      2005
+## 11 It Was So Easy  (LP Version)                       Carly Simon      1972
+## 12 I've Got A Crush On You                            Carly Simon      1994
+## 13 &quot;Manha De Carnaval (Theme from \&quot;Black Orpheus\&quot;)&quot; Carly Simon      2007</code></pre>
+<pre class="r"><code>#A mutating join will preserve the columns
+time %&gt;% 
+  inner_join(album, by=c(&quot;song&quot;, &quot;artist_name&quot;))</code></pre>
+<pre><code>## # A tibble: 13 x 5
+##    song                     artist_name    year city       album           
+##    &lt;chr&gt;                    &lt;chr&gt;         &lt;int&gt; &lt;chr&gt;      &lt;chr&gt;           
+##  1 Grievance                Pearl Jam      2000 Seattle, … Binaural        
+##  2 Stupidmop                Pearl Jam      1994 Seattle, … Vitalogy        
+##  3 Present Tense            Pearl Jam      1996 Seattle, … No Code         
+##  4 MFC                      Pearl Jam      1998 Seattle, … Live On Two Legs
+##  5 Lukin                    Pearl Jam      1996 Seattle, … Seattle Washing…
+##  6 It's Lulu                The Boo Radl…  1995 Liverpool… Best Of         
+##  7 Sparrow                  The Boo Radl…  1992 Liverpool… Everything's Al…
+##  8 High as Monkeys          The Boo Radl…  1998 Liverpool… Kingsize        
+##  9 Butterfly McQueen        The Boo Radl…  1993 Liverpool… Giant Steps     
+## 10 My One and Only Love     Carly Simon    2005 New York,… Moonlight Seren…
+## 11 It Was So Easy  (LP Ver… Carly Simon    1972 New York,… No Secrets      
+## 12 I've Got A Crush On You  Carly Simon    1994 New York,… Clouds In My Co…
+## 13 &quot;Manha De Carnaval (The… Carly Simon    2007 New York,… Into White</code></pre>
 <ol start="2" style="list-style-type: decimal">
 <li>Go ahead and add the corresponding albums to the <code>time</code> tibble, being sure to preserve rows even if album info is not readily available.</li>
 </ol>
-<pre class="r"><code>time %&gt;% 
-  FILL_THIS_IN(album, by = FILL_THIS_IN)</code></pre>
-<pre><code>## Error in FILL_THIS_IN(., album, by = FILL_THIS_IN): could not find function &quot;FILL_THIS_IN&quot;</code></pre>
+<pre class="r"><code>#We do not want to remove rows if album info is unavailable
+#use a mutating joint
+time %&gt;% 
+  left_join(album, by = c(&quot;song&quot;, &quot;artist_name&quot;))</code></pre>
+<pre><code>## # A tibble: 22 x 5
+##    song                artist_name     year city        album              
+##    &lt;chr&gt;               &lt;chr&gt;          &lt;int&gt; &lt;chr&gt;       &lt;chr&gt;              
+##  1 Corduroy            Pearl Jam       1994 &lt;NA&gt;        &lt;NA&gt;               
+##  2 Grievance           Pearl Jam       2000 Seattle, WA Binaural           
+##  3 Stupidmop           Pearl Jam       1994 Seattle, WA Vitalogy           
+##  4 Present Tense       Pearl Jam       1996 Seattle, WA No Code            
+##  5 MFC                 Pearl Jam       1998 Seattle, WA Live On Two Legs   
+##  6 Lukin               Pearl Jam       1996 Seattle, WA Seattle Washington…
+##  7 It's Lulu           The Boo Radle…  1995 Liverpool,… Best Of            
+##  8 Sparrow             The Boo Radle…  1992 Liverpool,… Everything's Alrig…
+##  9 Martin_ Doom! It's… The Boo Radle…  1995 &lt;NA&gt;        &lt;NA&gt;               
+## 10 Leaves And Sand     The Boo Radle…  1993 &lt;NA&gt;        &lt;NA&gt;               
+## # … with 12 more rows</code></pre>
 <ol start="3" style="list-style-type: decimal">
 <li>Which songs do we have “year”, but not album info?</li>
 </ol>
-<pre class="r"><code>time %&gt;% 
-  FILL_THIS_IN(album, by = &quot;song&quot;)</code></pre>
-<pre><code>## Error in FILL_THIS_IN(., album, by = &quot;song&quot;): could not find function &quot;FILL_THIS_IN&quot;</code></pre>
+<pre class="r"><code>#filtering join
+time %&gt;% 
+  semi_join(album, by = &quot;song&quot;)</code></pre>
+<pre><code>## # A tibble: 13 x 3
+##    song                                               artist_name      year
+##    &lt;chr&gt;                                              &lt;chr&gt;           &lt;int&gt;
+##  1 Grievance                                          Pearl Jam        2000
+##  2 Stupidmop                                          Pearl Jam        1994
+##  3 Present Tense                                      Pearl Jam        1996
+##  4 MFC                                                Pearl Jam        1998
+##  5 Lukin                                              Pearl Jam        1996
+##  6 It's Lulu                                          The Boo Radleys  1995
+##  7 Sparrow                                            The Boo Radleys  1992
+##  8 High as Monkeys                                    The Boo Radleys  1998
+##  9 Butterfly McQueen                                  The Boo Radleys  1993
+## 10 My One and Only Love                               Carly Simon      2005
+## 11 It Was So Easy  (LP Version)                       Carly Simon      1972
+## 12 I've Got A Crush On You                            Carly Simon      1994
+## 13 &quot;Manha De Carnaval (Theme from \&quot;Black Orpheus\&quot;)&quot; Carly Simon      2007</code></pre>
 <ol start="4" style="list-style-type: decimal">
 <li>Which artists are in <code>time</code>, but not in <code>album</code>?</li>
 </ol>
-<pre class="r"><code>time %&gt;% 
-  anti_join(album, by = &quot;FILL_THIS_IN&quot;)</code></pre>
-<pre><code>## `by` can't contain join column `FILL_THIS_IN` which is missing from LHS</code></pre>
+<pre class="r"><code>#filtering join again
+time %&gt;% 
+  anti_join(album, by = &quot;artist_name&quot;)</code></pre>
+<pre><code>## # A tibble: 5 x 3
+##   song                  artist_name   year
+##   &lt;chr&gt;                 &lt;chr&gt;        &lt;int&gt;
+## 1 Mine Again            Mariah Carey  2005
+## 2 Don't Forget About Us Mariah Carey  2005
+## 3 Babydoll              Mariah Carey  1997
+## 4 Don't Forget About Us Mariah Carey  2005
+## 5 Vision Of Love        Mariah Carey  1990</code></pre>
 <ol start="5" style="list-style-type: decimal">
 <li>You’ve come across these two tibbles, and just wish all the info was available in one tibble. What would you do?</li>
 </ol>
-<pre class="r"><code>FILL_THIS_IN %&gt;% 
-  FILL_THIS_IN(FILL_THIS_IN, by = &quot;song&quot;)</code></pre>
-<pre><code>## Error in eval(lhs, parent, parent): object 'FILL_THIS_IN' not found</code></pre>
+<pre class="r"><code>#Mutating join to add rows and columns
+#rows are added if album has songs not in time
+#cols are added if album has columns not in time
+time %&gt;% 
+  full_join(album, by = c(&quot;song&quot;, &quot;artist_name&quot;))</code></pre>
+<pre><code>## # A tibble: 23 x 5
+##    song                artist_name     year city        album              
+##    &lt;chr&gt;               &lt;chr&gt;          &lt;int&gt; &lt;chr&gt;       &lt;chr&gt;              
+##  1 Corduroy            Pearl Jam       1994 &lt;NA&gt;        &lt;NA&gt;               
+##  2 Grievance           Pearl Jam       2000 Seattle, WA Binaural           
+##  3 Stupidmop           Pearl Jam       1994 Seattle, WA Vitalogy           
+##  4 Present Tense       Pearl Jam       1996 Seattle, WA No Code            
+##  5 MFC                 Pearl Jam       1998 Seattle, WA Live On Two Legs   
+##  6 Lukin               Pearl Jam       1996 Seattle, WA Seattle Washington…
+##  7 It's Lulu           The Boo Radle…  1995 Liverpool,… Best Of            
+##  8 Sparrow             The Boo Radle…  1992 Liverpool,… Everything's Alrig…
+##  9 Martin_ Doom! It's… The Boo Radle…  1995 &lt;NA&gt;        &lt;NA&gt;               
+## 10 Leaves And Sand     The Boo Radle…  1993 &lt;NA&gt;        &lt;NA&gt;               
+## # … with 13 more rows</code></pre>
 </div>
 <div id="exercise-2-lotr" class="section level2">
 <h2>Exercise 2: LOTR</h2>
