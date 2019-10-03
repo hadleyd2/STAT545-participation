@@ -132,9 +132,9 @@ email %>%
 
 ```{r}
 n <- 100
-FILL_THIS_IN(label = FILL_THIS_IN,
-             FILL_THIS_IN = rnorm(n),
-             FILL_THIS_IN)
+tibble(label = "Sample A",
+             x = rnorm(n),
+             y = x + rnorm(n))
 ```
 
 
@@ -160,7 +160,9 @@ experiment <- tibble(
   measurement_1 = runif(6),
   measurement_2 = runif(6)
 )
-experiment %>% complete(name, trt, rep)
+experiment %>% complete(name, trt, rep) #we don't want this since Alex never received treatment b and it is not an NA
+
+experiment %>% complete(nesting(name, trt), rep) #pairs name+trt together
 ```
 
 
