@@ -142,6 +142,6 @@ union(
 3. The rows contained in `z` are bad! Remove those rows from `y`.
 
 ```{r}
-setdiff(z, y)
-anti_join(z, y) #same as setdiff() in this scenario
+setdiff(y, z)
+anti_join(y, z) #same as setdiff() in this scenario
 ```
