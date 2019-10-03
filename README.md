@@ -12,3 +12,5 @@ Participation repo for STAT 545 which includes the in-class activities for each 
 | 006    | September 19, 2019 | [cm006](https://github.com/hadleyd2/STAT545-participation/tree/master/weeks_3_thru_5/cm006) |
 | 007    | September 24, 2019 | [cm007](https://github.com/hadleyd2/STAT545-participation/tree/master/weeks_3_thru_5/cm007) |
 | 008    | September 26, 2019 | [cm008](https://github.com/hadleyd2/STAT545-participation/tree/master/weeks_3_thru_5/cm008) |
+| 009    | October 01, 2019 | [cm008](https://github.com/hadleyd2/STAT545-participation/tree/master/weeks_3_thru_5/cm009) |
+| 010    | October 03, 2019 | [cm008](https://github.com/hadleyd2/STAT545-participation/tree/master/weeks_3_thru_5/cm010) |
