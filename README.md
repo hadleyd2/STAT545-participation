@@ -1,6 +1,6 @@
 # STAT 545A participation
 
-Participation repo for STAT 545 which includes the in-class activities for each class meeting (cm\*\*\*) where \*\*\* is replaced with a number for the class meeting.  Dates and links are included in the table below:
+Participation repo for STAT 545 which includes the in-class activities for each class meeting (cm0\*\*) where \*\* is replaced with a number for the class meeting.  Dates and links are included in the table below:
 
 | Class Meeting | Date    | File/Folder |           
 | :--: | ---- | :-------------: |
