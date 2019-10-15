@@ -94,6 +94,46 @@ Did you know that you can make interactive graphs and plots in R using the plotl
 
 This is a preview of what we'll be doing in STAT 547 - making dynamic and interactive dashboards using R!
 
+```{r install-plotly}
+#install.packages('plotly')
+```
+
+```{r}
+suppressPackageStartupMessages(library(tidyverse))
+suppressPackageStartupMessages(library(gapminder))
+suppressPackageStartupMessages(library(plotly))
+
+p <- ggplot(gapminder, aes(x=gdpPercap, y=lifeExp,
+                           color=continent)) +
+  geom_point()
+
+p
+
+#make interactive
+p %>% 
+  ggplotly()
+
+#click on legend once to make those points disappear; click twice to isolate only those points
+
+# syntax for plotly
+gapminder %>% 
+  plot_ly(x=~gdpPercap,
+          y=~lifeExp,
+          color=~continent,
+          
+          type='scatter',
+          mode='markers' #markers for points, 
+          )
+
+# plotly graphs are still interactive when rendered to html
+# You can share plots using plot.ly.com and
+# Sys.setenv("plotly_username"="your_plotly_username")
+# Sys.setenv("plotly_api_key"="your_api_key")
+
+#To upload plot to plot.ly.com
+# api_create(p, filename='cm013-plotly-example')
+```
+
 ## Supplemental worksheet (Optional)
 
 You are highly encouraged to the cm013 supplemental exercises worksheet. It is a great guide that will take you through Scales, Colours, and Themes in ggplot. There is also a short guided activity showing you how to make a ggplot interactive using plotly.
