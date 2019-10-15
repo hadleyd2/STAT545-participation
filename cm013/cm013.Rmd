@@ -62,7 +62,7 @@ Write some notes here about what "effective visualizations" means to you. Think 
 
 - The evidence is strong, but correlation does not equal causation.
 
-- Main takeaway: I didn't even realize the y-axis numbers increasing from bottom to top, so my above statement is clearly incorrect.
+- Main takeaway: I didn't even realize the y-axis numbers increasing from bottom to top, so my above statement is clearly incorrect.  Make sure plot is intuitive.
 
 ## Part 2: Extracting insight from visualizations  [20 mins]
 
