@@ -141,7 +141,7 @@ tribble(
   geom_line()
 ```
 
-## Exercise 5: Life expectancies in Africa
+## Exercise 5: Life expectancies in Americas
 
 ### 5(a) Unhiding the data
 
