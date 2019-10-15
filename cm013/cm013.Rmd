@@ -70,6 +70,8 @@ Great resource for selecting the right plot: https://www.data-to-viz.com/ ; enco
 
 ### Case Study 1: Context matters
 
+Plots can be misleading and it is up to the researcher to understand the potential audiences.
+
 ### Case Study 2: A case for pie charts
 
 ## Part 3: Principles of effective visualizations [20 mins]
