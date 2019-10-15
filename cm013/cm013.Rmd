@@ -38,9 +38,9 @@ Write some notes here about what "effective visualizations" means to you. Think 
 
 > Question: Evaluate the strength of the claim based on the data: "German workers are more motivated and work more hours than workers in other EU nations."
 >
-> Very strong, strong, weak, very week, do not know
+> Very strong, strong, weak, very weak, do not know
 
-- <<Your answer here (and make sure to explain why you chose this answer)>>
+- Weak.  The bar plot is misleading in its scale of the x-axis.  The country with the least hours worked is France which is only 3 hours per week less than Germany.  The entire range of weekly hours only spans 3.8 hours.  Also, since it only shows the average, we do not know how skewed the distribution of weekly hours works is or how many workers contributed to the average.  If we knew the proportion of the population working versus not working, perhaps we could deduce more.
 
 - Main takeaway: Summarize the main takeaway from this question/discussion here
 
