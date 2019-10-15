@@ -52,7 +52,7 @@ Write some notes here about what "effective visualizations" means to you. Think 
 
 - Do not know, because we do not even see the year labels for the x-axis.  The range of the y-axis seems too large for the data to see any trend.
 
-- Main takeaway: Summarize the main takeaway from this question/discussion here
+- Main takeaway: Properly label plot (axes, title, etc.), there is approximately a two-degree increase that is obscured by the way the data is presented so that it is up to the researcher to choose appropriate scales for axes values.
 
 ### CQ03: Gun deaths in Florida
 
@@ -60,9 +60,9 @@ Write some notes here about what "effective visualizations" means to you. Think 
 >
 > Very strong, strong, weak, very week, do not know
 
-- <<Your answer here (and make sure to explain why you chose this answer)>>
+- The evidence is strong, but correlation does not equal causation.
 
-- Main takeaway: Summarize the main takeaway from this question/discussion here
+- Main takeaway: I didn't even realize the y-axis numbers increasing from bottom to top, so my above statement is clearly incorrect.
 
 ## Part 2: Extracting insight from visualizations  [20 mins]
 
