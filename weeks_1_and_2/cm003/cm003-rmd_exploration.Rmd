@@ -4,6 +4,7 @@ author: "Dan Hadley"
 date: "9/10/2019"
 output: 
   html_document:
+    keep_md: true
     toc: true
     number_sections: true
     theme: cerulean

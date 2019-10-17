@@ -11,7 +11,8 @@ This repository contains the in-class activities for STAT 545A.  Class Meetings 
   [`cm002_R_exploration.R`](https://github.com/hadleyd2/STAT545-participation/blob/master/weeks_1_and_2/cm002/cm002-R_exploration.R) |
   
 | 003    | September 10, 2019 | [cm003](https://github.com/hadleyd2/STAT545-participation/tree/master/weeks_1_and_2/cm003) |
-  [`navigating_github.md`]() |
+  [`navigating_github.md`](https://github.com/hadleyd2/STAT545-participation/blob/master/weeks_1_and_2/cm003/navigating_github.md) |
+| | | | []() |
   
 | 004    | September 12, 2019 | [RProj file for version control and workflow](https://github.com/hadleyd2/STAT545-participation/blob/master/STAT545-participation.Rproj) |
 | 005    | September 17, 2019 | [cm005](https://github.com/hadleyd2/STAT545-participation/tree/master/weeks_3_thru_5/cm005) |
