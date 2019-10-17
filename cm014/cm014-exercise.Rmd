@@ -6,6 +6,7 @@ editor_options:
 ---
 
 ```{r}
+#install.packages('broom')
 suppressPackageStartupMessages(library(tidyverse))
 library(gapminder)
 library(broom)
@@ -89,17 +90,20 @@ Exercise:
 
 First, create a subset of the `gapminder` dataset containing only the country of `France
 ```{r}
-(gapminder_France <- FILL_THIS_IN
+gapminder_France <- gapminder %>% 
+  filter(country == "France")
 ```
 
 Now, using the `lm()` function we will create the linear model
 ```{r}
-(my_lm <- lm(FILL_THIS_IN))
+(my_lm <- lm(lifeExp ~ year, data=gapminder_France))
 ```
 Does that mean that the life expectency at "year 0" was equal to -397.7646?!
 We are interested in the modeling results around the modeling period which starts at year 1952. To get a meaniningful "interpretable" intercept we can use the `I()` function.
 ```{r}
-(my_lm <- lm(FILL_THIS_IN))
+#no-intercept regression allows interpretation of the intercept term
+#as average life expectancy in France for year 1952 in this case
+(my_lm <- lm(lifeExp ~ I(year-1952), data=gapminder_France))
 
 ```
 
@@ -114,16 +118,26 @@ To complicate things further, some info is stored in _another_ list after applyi
 summary(my_lm)
 ```
 
+We can also plot residuals
+```{r}
+my_lm_resid <- augment(my_lm)
+ggplot(my_lm_resid, aes(.resid)) +
+  geom_freqpoly(binwidth = 0.5)
+```
+
 We can use the `predict()` function to make predictions from the model (default is to use fitting/training data). Here are the predictions:
 
 ```{r}
+#uses the same variables as defined in my_lm (lifeExp ~ year)
 predict(my_lm) %>% 
   head()
 ```
 Or we can predict on a new dataset:
 ```{r}
-years1 = FILL_THIS_IN
-predict(my_lm,years1)
+#to use new data, we must have the same dependent variable(s) as the 
+#original dataset used to create the my_lm object
+years1 = data.frame(year = seq(2000, 2005))
+predict(my_lm, newdata=years1)
 
 ```
 
